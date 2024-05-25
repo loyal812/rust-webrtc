@@ -1,4 +1,9 @@
 #![allow(deprecated)]
+#![warn(rust_2018_idioms)]
+#![warn(missing_debug_implementations)]
+#![warn(missing_docs)]
+
+//! A simple WebRTC streaming server. It streams video and audio from a file to a browser client.
 
 use anyhow::Result;
 use hyper::service::{make_service_fn, service_fn};
@@ -42,6 +47,7 @@ async fn remote_handler(req: Request<Body>) -> Result<Response<Body>, hyper::Err
     }
 }
 
+/// Bind to a port and serve sdp.
 pub async fn http_sdp_server(port: u16) -> mpsc::Receiver<String> {
     let (sdp_chan_tx, sdp_chan_rx) = mpsc::channel::<String>(1);
     {
@@ -63,6 +69,7 @@ pub async fn http_sdp_server(port: u16) -> mpsc::Receiver<String> {
     sdp_chan_rx
 }
 
+/// Helper function to read input base64 data.
 pub fn must_read_stdin() -> Result<String> {
     let mut line = String::new();
 
@@ -73,10 +80,12 @@ pub fn must_read_stdin() -> Result<String> {
     Ok(line)
 }
 
+/// Encode base64 wrapper function.
 pub fn encode(b: &str) -> String {
     base64::encode(b.as_bytes())
 }
 
+/// Decode base64 wrapper function.
 pub fn decode(s: &str) -> Result<String> {
     let b = base64::decode(s.as_bytes())?;
     let s = String::from_utf8(b)?;
