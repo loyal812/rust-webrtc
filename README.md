@@ -2,6 +2,8 @@
 
 A simple WebRTC streaming server. It streams video and audio from a file to a browser client.
 
+![App recording](/demo/recording.gif?raw=true "WebRTC stream demo")
+
 ## Try it out!
 1. Install [Rust](https://rustup.rs/)
 2. Serve WebRTC demo client (for example with [serve-directory](https://crates.io/crates/serve-directory))
